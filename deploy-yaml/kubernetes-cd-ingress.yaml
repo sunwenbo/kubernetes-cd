@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubernetes-cd-dev
+  namespace: spatio-dev
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/security-groups: sg-088911cc7a467f3cf
+    #alb.ingress.kubernetes.io/load-balancer-attributes: access_logs.s3.enabled=true,access_logs.s3.bucket=xctest666,access_logs.s3.prefix=my-app
+
+spec:
+  rules:
+    - host: "kubernetes-cd-dev.spatio-inc.com"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ops-sre-kubernetes-cd
+                port: 
+                  number:  8888
